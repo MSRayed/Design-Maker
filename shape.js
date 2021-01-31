@@ -7,11 +7,11 @@ function Shape(x, y, sides, rad, hashes) {
   this.display = function() {
     push();
     translate(this.pos.x, this.pos.y);
-    stroke(255);
+    stroke(0);
     strokeWeight(2);
     noFill();
     this.polygon(); // Draws the polygon
-    this.drawHashes();
+    this.drawHashes(); // Draws the hashes
     pop();
   }
 
