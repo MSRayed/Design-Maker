@@ -7,6 +7,8 @@ var cols;
 var row_size;
 var col_size;
 
+var offset = 0;
+
 function setup() {
   createCanvas(800, 800);
 
@@ -16,7 +18,8 @@ function setup() {
     "row_size" : makeSlider(20, 50, 10, 1, initialize),
     "col_size" : makeSlider(20, 50, 10, 1, initialize),
     "radius" : makeSlider(10, 100, 20, 1, initialize),
-    "sides" : makeSlider(3, 15, 6, 1, initialize)
+    "sides" : makeSlider(3, 15, 6, 1, initialize),
+    "hashes" : makeSlider(3, 25, 5, 1, initialize),
   }
 
   setValuesFromSlider();
@@ -46,10 +49,20 @@ function initialize() {
   for (let i = 1; i < rows-1; i++) {
     let y = i * row_size;
     let row = [];
-    for (let j = 1; j < cols-1; j++) {
-      let x = j * col_size;
 
-      let shape = new Shape(x, y, sliders['sides'].value(), sliders['radius'].value());
+    // Indenting the even rows in the art
+    if (i % 2 != 0) {
+      cols = cols - 1;
+      offset = 0;
+    } else {
+      cols = cols + 1;
+      offset = sliders['radius'].value() / 2;
+    }
+
+    for (let j = 1; j < cols-1; j++) {
+      let x = j * col_size - offset;
+
+      let shape = new Shape(x, y, sliders['sides'].value(), sliders['radius'].value(), sliders['hashes'].value());
       row.push(shape);
     }
     shapes.push(row);
@@ -61,4 +74,5 @@ function setValuesFromSlider() {
   cols = sliders['cols'].value();
   row_size = sliders['row_size'].value();
   col_size = sliders['col_size'].value();
+  //console.log(rows, cols, row_size, col_size);
 }
