@@ -7,7 +7,7 @@ var row_size;
 var col_size;
 
 function setup() {
-  cnv = createCanvas(800, 800);
+  createCanvas(500, 700, SVG);
 
   sliders = {
     "rows" : makeSlider(5, 30, 10, 1, initialize, "Number of rows"),
@@ -17,6 +17,9 @@ function setup() {
     "radius" : makeSlider(10, 100, 20, 1, initialize, "Radius of shapes"),
     "sides" : makeSlider(3, 15, 6, 1, initialize, "Number of sides of the shape"),
     "hashes" : makeSlider(3, 25, 5, 1, initialize, "Number of hashes"),
+
+    "window_width": makeSlider(200, 1200, 600, 50, window_resize, "Width of the canvas"),
+    "window_height": makeSlider(200, 1200, 600, 50, window_resize, "Height of the canvas")
   }
 
   setValuesFromSlider();
@@ -25,8 +28,7 @@ function setup() {
 
 
 function draw() {
-  background(200);
-  setValuesFromSlider(); // Sets the variable values to the slider value
+  background(240);
 
   for (let row of shapes) {
     for (let shape of row) {
@@ -53,28 +55,30 @@ function makeSlider(min, max, start, step, callback, title_text) { // To create 
 
 function initialize() {
   shapes = [];
-  offset = 0;
 
-  for (let i = 1; i < rows-1; i++) {
+  setValuesFromSlider(); // Sets the variable values to the slider value
+
+  for (let i = 1; i < rows; i++) {
     let y = i * row_size;
     let row = [];
+    for (let j = 1 + i % 2; j < (cols - 1) - i % 2; j++) { //Altering the number of the columns
+      let x = j * col_size;
 
-    if (i % 2 != 0) { // Indenting the odd rows
-      cols = cols - 1;
-      offset = sliders['radius'].value();
-    } else {
-      cols = cols + 1;
-      offset = 0;
-    }
-
-    for (let j = 1; j < cols-1; j++) {
-      let x = (j * col_size) + offset;
-
-      let shape = new Shape(x, y, sliders['sides'].value(), sliders['radius'].value(), sliders['hashes'].value());
+      let shape = new Shape(x, y, sliders['sides'].value(), // Getting the values from sliders
+      											sliders['radius'].value(), 
+      											sliders['hashes'].value());
       row.push(shape);
     }
     shapes.push(row);
   }
+}
+
+function window_resize() {
+	w = sliders['window_width'].value();
+	h = sliders['window_height'].value();
+	console.log(w, h);
+
+	resizeCanvas(w, h);
 }
 
 function setValuesFromSlider() {
@@ -83,8 +87,4 @@ function setValuesFromSlider() {
 
   row_size = sliders['row_size'].value();
   col_size = sliders['col_size'].value();
-}
-
-function saveSVG() {
-  save('design.svg');
 }
