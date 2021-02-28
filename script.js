@@ -9,33 +9,32 @@ var col_size;
 function setup() {
   createCanvas(500, 700);
 
-  rect(200, 300, 200, 100);
-  // sliders = {
-  //   "rows" : makeSlider(5, 30, 10, 1, initialize, "Number of rows"),
-  //   "cols" : makeSlider(5, 30, 10, 1, initialize, "Number of columns"),
-  //   "row_size" : makeSlider(20, 50, 10, 1, initialize, "Distance between Shapes (Vertical)"),
-  //   "col_size" : makeSlider(20, 50, 10, 1, initialize, "Distance between Shapes (Horizontal)"),
-  //   "radius" : makeSlider(10, 100, 20, 1, initialize, "Radius of shapes"),
-  //   "sides" : makeSlider(3, 15, 6, 1, initialize, "Number of sides of the shape"),
-  //   "hashes" : makeSlider(3, 25, 5, 1, initialize, "Number of hashes"),
+  sliders = {
+    "rows" : makeSlider(5, 30, 10, 1, initialize, "Number of rows"),
+    "cols" : makeSlider(5, 30, 10, 1, initialize, "Number of columns"),
+    "row_size" : makeSlider(20, 50, 10, 1, initialize, "Distance between Shapes (Vertical)"),
+    "col_size" : makeSlider(20, 50, 10, 1, initialize, "Distance between Shapes (Horizontal)"),
+    "radius" : makeSlider(10, 100, 20, 1, initialize, "Radius of shapes"),
+    "sides" : makeSlider(3, 15, 6, 1, initialize, "Number of sides of the shape"),
+    "hashes" : makeSlider(3, 25, 5, 1, initialize, "Number of hashes"),
 
-  //   "window_width": makeSlider(200, 1200, 600, 50, window_resize, "Width of the canvas"),
-  //   "window_height": makeSlider(200, 1200, 600, 50, window_resize, "Height of the canvas")
-  // }
+    "window_width": makeSlider(200, 1200, 600, 50, window_resize, "Width of the canvas"),
+    "window_height": makeSlider(200, 1200, 600, 50, window_resize, "Height of the canvas")
+  }
 
-  // setValuesFromSlider();
-  // initialize(); // Will initialize the shapes
+  setValuesFromSlider();
+  initialize(); // Will initialize the shapes
 }
 
 
 function draw() {
-  // background(240);
+  background(240);
 
-  // for (let row of shapes) {
-  //   for (let shape of row) {
-  //     shape.display();
-  //   }
-  // }
+  for (let row of shapes) {
+    for (let shape of row) {
+      shape.display();
+    }
+  }
 }
 
 function makeSlider(min, max, start, step, callback, title_text) { // To create the slider adding an input event to it
